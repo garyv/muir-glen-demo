@@ -1,0 +1,265 @@
+@charset 'utf-8'
+
+@import 'normalize'
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,300)
+
+@import "font-awesome"
+
+$page-width: 1024px
+$font-size: 16px
+
+$banner-height: 38px
+$nav-font-size: 11.5px
+
+@function liquid($pixels, $context-width:$page-width)
+  @return percentage($pixels / $context-width)
+
+@function elastic($pixels, $context-height:$font-size)
+  @return #{($pixels / $context-height)}em
+
+@function retina($pixels)
+  @return #{$pixels / 2}
+
+@mixin liquid-limits($pixel-width)
+  max-width: $pixel-width
+  min-width: liquid($pixel-width / 2)
+
+body
+  background: #231f20
+  font-family: Open Sans, sans serif
+  color: white
+  text-align: center
+  font-size: percentage($font-size / 16px)
+
+
+header
+  font-weight: 300
+  position: fixed
+  left: 0
+  right: 0
+  top: 25px
+  text-transform: uppercase
+  z-index: 8888
+  text-align: left
+
+.logo
+  top: elastic(-10px)
+  position: relative
+  float: left
+  display: block
+  width: 141px
+
+  margin:
+    left: liquid(18px)
+    right: liquid(51px)
+
+nav
+  //position: relative
+  //display: inline-block
+  min-height: $banner-height
+
+
+  background: #231f20
+  color: white
+  //min-width: 60%
+
+  padding:
+    right: 70px
+    left: 146px
+
+  $nav-width: $page-width - 146px - 70px
+
+  a
+    //background-color: #231f20
+    //display: inline-block
+    //float: left
+    height: $banner-height
+    font-size: $nav-font-size
+    height: $banner-height - 15px
+    line-height: $banner-height
+    padding: 0 liquid(7px, $nav-width) liquid(7px, $nav-width)
+    white-space: nowrap
+
+  .social
+    display: inline
+    position: relative
+    left: liquid(43px, $nav-width)
+    white-space: nowrap
+    a
+      padding: 0 liquid(6px)
+    span
+      display: none
+    i
+      font-size: 13px
+      @extend .fa
+    .facebook i
+      @extend .fa-facebook
+    .twitter i
+      @extend .fa-twitter
+    .pinterest i
+      @extend .fa-pinterest
+    .instagram i
+      @extend .fa-instagram
+
+section,
+footer
+  background: white
+  color: black
+
+
+#hamburger
+  position: absolute
+  right: liquid(21px)
+  //top: 0
+  color: white
+  background: transparent url(../images/hamburger.png) center center no-repeat
+  background-size: (54px/2) (30px/2)
+  border: none
+  width: (54px / 2)
+  height: $banner-height
+  top: 0
+  font-size: 20px
+  color: transparent
+  float: right
+
+a,
+a:link, a:visited
+  color: white
+  text-decoration: none
+
+img,
+video
+  display: block
+  max-width: 100%
+  min-height: 60px
+  height: auto
+video
+  min-width: 100%
+  background-color: #231f20
+
+
+
+button
+  position: absolute
+
+.hide
+  display: none
+
+nav.hide
+  display: block
+  a
+    display: none
+
+
+.full-width,
+video
+  width: 100%
+
+.center-x
+  margin: 0 auto
+  text-align: center
+
+.newsletter
+  @extend .center-x
+
+.video-controls button
+  color: transparent
+  height: retina(78px)
+  width: retina(78px)
+  background:
+    color: transparent
+    image: url(../images/play_pause.png?v=2)
+    size: retina(160px) retina(78px)
+    position: top right
+  border: 0 none
+
+  &#pause
+    background-position: top left
+
+// sections
+
+#section-1
+  position: relative
+  background: #231f20
+  color: white
+
+  button
+    position: absolute
+    bottom: liquid(97px)
+    right: liquid(110px)
+
+#section-2
+  background: #f5bc32
+
+  img
+    +liquid-limits(816px)
+
+#section-5
+  background: #7a9b4e
+  img
+    +liquid-limits(947px)
+
+#section-7
+  background: #aa2131
+  img
+    padding:
+      top: elastic(74px)
+      bottom: elastic(74px)
+
+#section-9
+  padding-top: elastic(54px)
+
+section img.center-x
+  padding:
+    top: elastic(33px)
+    bottom: elastic(26px)
+    left: liquid(20px)
+    right: liquid(20px)
+
+footer img
+  padding:
+    top: elastic(56px)
+    bottom: elastic(50px)
+    left: liquid(20px)
+    right: liquid(20px)
+  max-width: liquid($page-width - 40px)
+
+// smallish screen
+@media screen and (max-width: elastic(650px))
+  nav
+    padding-right: 40px
+
+// mobile
+@media screen and (max-width: elastic(470px))
+
+  // ensure images with padding are full width
+  img.center-x
+    max-width: liquid($page-width - 40px) !important
+
+  header
+    position: relative
+    top: 0
+  .logo
+    top: 15px
+    left: 0
+  nav
+    padding-left: 168px
+    padding-bottom: 10px
+    a
+      font-size: 12px
+      display: block
+      width: 100%
+    .social
+      position: absolute
+      right: liquid(50px)
+      display: block
+      top: 30px
+      left: auto
+
+  //TODO - make max width elastic
+  //TODO - explain difference between liquid and elastic 1 or 2 lines
+  //TODO - use retina() consistently
+
+
+
+
